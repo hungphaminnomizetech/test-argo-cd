@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: observability
+  namespace: argocd
+spec:
+  project: prod
+  source:
+    repoURL: https://charts.bitnami.com/bitnami
+    chart: observability
+    targetRevision: 21.1.1
+    helm:
+      values: |
+        # values for observability
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: platform-sre
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true

@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: istio
+  namespace: argocd
+spec:
+  project: prod
+  source:
+    repoURL: https://charts.bitnami.com/bitnami
+    chart: istio
+    targetRevision: 21.1.1
+    helm:
+      values: |
+        # values for istio
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: platform-sre
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true

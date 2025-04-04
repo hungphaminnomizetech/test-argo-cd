@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: keycloak
+  namespace: argocd
+spec:
+  project: staging
+  source:
+    repoURL: https://charts.bitnami.com/bitnami
+    chart: keycloak
+    targetRevision: 21.1.1
+    helm:
+      values: |
+        auth:
+          adminUser: admin
+          adminPassword: albert123
+          databaseUser: bn_keycloak
+          databasePassword: securepass
+        postgresql:
+          enabled: true
+          auth:
+            username: bn_keycloak
+            password: securepass
+        
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: platform-core
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true

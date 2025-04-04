@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Secret
+
+metadata:
+  name: github-secert-argocd
+  namespace: argocd
+  labels:
+    argocd.argoproj.io/secret-type: repository
+type: Opaque
+
+stringData:
+  url: https://github.com/hungphaminnomizetech/test-argo-cd.git
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dev-bootstrap
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/hungphaminnomizetech/test-argo-cd.git
+    targetRevision: main
+    path: environments/dev
+    directory:
+      recurse: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
