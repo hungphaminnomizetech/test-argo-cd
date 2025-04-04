@@ -1,0 +1,20 @@
+# values for postgres
+auth:
+  enablePostgresUser: true
+  username: hung_test
+  password: VgqqTL0hRU
+  database: test
+  postgresPassword: test123@
+
+postgresql:
+  extendedConf: true
+  postgresqlConf:
+    listen_addresses: "'*'"  # Allow PostgreSQL to listen on all interfaces
+
+resources:
+  limits:
+    cpu: 800m
+    memory: 512Mi
+  requests:
+    cpu: 500m
+    memory: 256Mi
