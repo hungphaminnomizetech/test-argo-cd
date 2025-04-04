@@ -1,0 +1,57 @@
+apiVersion: v1
+kind: Secret
+
+metadata:
+  name: github-secert-argocd
+  namespace: argocd
+  labels:
+    argocd.argoproj.io/secret-type: repository
+type: Opaque
+
+data:
+  username: bm90LXVzZWQ=
+  password: Z2hwXzFYQ0xHTE0zejZOVTR5NTRRbVFMQWZrc1pFa2JWTDJ4WUVPeA==
+  url: aHR0cHM6Ly9naXRodWIuY29tL2h1bmdwaGFtaW5ub21pemV0ZWNoL3Rlc3QtYXJnby1jZC5naXQ=
+
+---
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tra-root-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/hungphaminnomizetech/test-argo-cd.git
+    targetRevision: main
+    path: argo-cd
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+
+---
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cadence-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/hungphaminnomizetech/test-argo-cd.git
+    targetRevision: main
+    path: workflow-orchestration
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+
