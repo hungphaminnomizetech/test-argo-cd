@@ -1,0 +1,11 @@
+auth:
+  adminUser: admin
+  adminPassword: albert123
+  databaseUser: bn_keycloak
+  databasePassword: securepass
+  
+postgresql:
+  enabled: true
+  auth:
+    username: bn_keycloak
+    password: securepass

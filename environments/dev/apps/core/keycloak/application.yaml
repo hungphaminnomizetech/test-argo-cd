@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: 'keycloak'
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: 'dev'
+  sources:
+    - repoURL: https://charts.bitnami.com/bitnami
+      chart: keycloak
+      targetRevision: 21.1.1
+      helm:
+        valueFiles:
+          - $values/environments/dev/apps/core/keycloak/values.yaml
+    - repoURL: https://github.com/hungphaminnomizetech/test-argo-cd.git
+      targetRevision: main
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: platform-core
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true

@@ -1,3 +1,0 @@
-
-kubectl get secret github-secert-argocd -n argocd
-kubectl get secret github-secret-argocd -n argocd
