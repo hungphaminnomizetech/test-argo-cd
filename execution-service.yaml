@@ -23,10 +23,14 @@ spec:
             - containerPort: 8080
           env:
             # PostgreSQL config
-            - name: CADENCE_HOST
-              value: "cadence-frontend.platform-core.svc.cluster.local"
             - name: RABBITMQ_PORT
               value: "5672"
+            - name: RABBITMQ_HOST
+              value: "rabbitmq.messaging.svc.cluster.local"
+            - name: RABBITMQ_USERNAME
+              value: "user"
+            - name: RABBITMQ_PASSWORD
+              value: "bitnami"
             - name: SPRING_PROFILES_ACTIVE
               value: "prod"
             - name: CATALOG_SERVICE_URL
@@ -40,6 +44,12 @@ spec:
               value: "7933"
             - name: CADENCE_DOMAIN
               value: "albert-ai-execution"
+            - name: POSTGRES_HOST
+              value: "postgres-postgresql.platform-core.svc.cluster.local"
+            - name: POSTGRES_USERNAME
+              value: "hung_test"
+            - name: POSTGRES_PASSWORD
+              value: "VgqqTL0hRU"
 ---
 apiVersion: v1
 kind: Service

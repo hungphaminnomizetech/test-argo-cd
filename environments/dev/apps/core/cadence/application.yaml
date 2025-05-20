@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cadence
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: dev
+  sources:
+    - repoURL: https://github.com/theresearchgroup/cadence-charts.git
+      targetRevision: postgres-support
+      path: charts/cadence
+      helm:
+        valueFiles:
+          - $values/environments/dev/apps/core/cadence/values.yaml
+    - repoURL: https://github.com/hungphaminnomizetech/test-argo-cd.git
+      targetRevision: main
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: platform-core
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
