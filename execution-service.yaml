@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: execution-service
+  namespace: service
+  labels:
+    app: execution-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: execution-service
+  template:
+    metadata:
+      labels:
+        app: execution-service
+    spec:
+      containers:
+        - name: execution-service
+          image: hiepinnomizetech/tra-execution-service
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            # PostgreSQL config
+            - name: CADENCE_HOST
+              value: "cadence-frontend.platform-core.svc.cluster.local"
+            - name: RABBITMQ_PORT
+              value: "5672"
+            - name: SPRING_PROFILES_ACTIVE
+              value: "prod"
+            - name: CATALOG_SERVICE_URL
+              value: 'http://service-catalogue.tra-app:8004'
+            - name: RETRIEVAL_SERVICE_URL
+              value: 'http://retrieval-service.tra-app:8012'
+            # Cadence config
+            - name: CADENCE_HOST
+              value: "cadence-frontend.platform-core.svc.cluster.local"
+            - name: CADENCE_PORT
+              value: "7933"
+            - name: CADENCE_DOMAIN
+              value: "albert-ai-execution"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: execution-service
+  namespace: service
+  labels:
+    app: execution-service
+spec:
+  type: ClusterIP
+  selector:
+    app: execution-service
+  ports:
+    - port: 80
+      targetPort: 8080
