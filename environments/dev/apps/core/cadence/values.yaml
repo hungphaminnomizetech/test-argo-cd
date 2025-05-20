@@ -1,0 +1,42 @@
+frontend:
+  replicas: 1
+  cpu:
+    limit: "400m"
+    request: "200m"
+  memory:
+    limit: "500Mi"
+    request: "200Mi"
+
+matching:
+  replicas: 1
+  cpu:
+    limit: "400m"
+    request: "200m"
+  memory:
+    limit: "500Mi"
+    request: "200Mi"
+
+history:
+  replicas: 1
+  cpu:
+    limit: "400m"
+    request: "200m"
+  memory:
+    limit: "500Mi"
+    request: "200Mi"
+
+worker:
+  cpu:
+    limit: "400m"
+    request: "200m"
+  memory:
+    limit: "500Mi"
+    request: "200Mi"
+
+web:
+  cpu:
+    limit: "400m"
+    request: "200m"
+  memory:
+    limit: "500Mi"
+    request: "200Mi"
